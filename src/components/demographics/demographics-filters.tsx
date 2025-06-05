@@ -45,7 +45,7 @@ export function DemographicsFilters({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <CardTitle className="flex items-center gap-2">
           <Filter className="h-5 w-5" />
           Filters
@@ -56,7 +56,7 @@ export function DemographicsFilters({
         </Button>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
             <Label>Gender</Label>
             <Select

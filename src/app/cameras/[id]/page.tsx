@@ -60,29 +60,32 @@ export default function CameraDetailPage() {
           onClick={() => router.push("/cameras")}
           className="mb-4">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Cameras
+          <span className="hidden sm:inline">Back to Cameras</span>
+          <span className="sm:hidden">Back</span>
         </Button>
 
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-              <Video className="h-8 w-8 text-blue-600" />
-              {camera.name}
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2">
+              <Video className="h-6 sm:h-8 w-6 sm:w-8 text-blue-600 flex-shrink-0" />
+              <span className="truncate">{camera.name}</span>
             </h1>
-            <p className="text-gray-600 mt-1">Camera ID: {camera.id}</p>
+            <p className="text-gray-600 mt-1 text-sm sm:text-base">
+              Camera ID: <span className="font-mono text-xs">{camera.id}</span>
+            </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Link href={`/cameras/${camera.id}/edit`}>
-              <Button variant="primary">
-                <Edit className="h-4 w-4 mr-2" />
-                Edit
+              <Button variant="primary" size="sm" className="sm:size-md">
+                <Edit className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Edit</span>
               </Button>
             </Link>
             <Link href={`/demographics?camera_id=${camera.id}`}>
-              <Button variant="outline">
-                <BarChart3 className="h-4 w-4 mr-2" />
-                Demographics
+              <Button variant="outline" size="sm" className="sm:size-md">
+                <BarChart3 className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Demographics</span>
               </Button>
             </Link>
           </div>

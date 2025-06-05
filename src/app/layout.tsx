@@ -19,14 +19,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+      </head>
       <body className={inter.className} suppressHydrationWarning>
         <Providers>
           <div className="min-h-screen bg-gray-50">
             <Navigation />
-            <main>{children}</main>
+            <main className="pb-safe">{children}</main>
           </div>
+          <ConnectionStatus />
         </Providers>
-        <ConnectionStatus />
       </body>
     </html>
   );

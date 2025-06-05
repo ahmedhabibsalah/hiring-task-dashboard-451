@@ -17,6 +17,7 @@ export function Pagination({
 }: PaginationProps) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const maxVisiblePages = 5;
+  const maxVisiblePagesMobile = 3;
 
   let visiblePages = pages;
   if (totalPages > maxVisiblePages) {
@@ -26,18 +27,32 @@ export function Pagination({
     visiblePages = pages.slice(start - 1, end);
   }
 
+  let mobileVisiblePages = pages;
+  if (totalPages > maxVisiblePagesMobile) {
+    const halfVisible = Math.floor(maxVisiblePagesMobile / 2);
+    const start = Math.max(currentPage - halfVisible, 1);
+    const end = Math.min(start + maxVisiblePagesMobile - 1, totalPages);
+    mobileVisiblePages = pages.slice(start - 1, end);
+  }
+
   return (
-    <div className={cn("flex items-center space-x-2", className)}>
+    <div
+      className={cn(
+        "flex items-center justify-center space-x-1 sm:space-x-2",
+        className
+      )}>
       <Button
         variant="outline"
         size="sm"
         onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}>
+        disabled={currentPage === 1}
+        className="h-8 sm:h-10 px-2 sm:px-3">
         <ChevronLeft className="h-4 w-4" />
-        Previous
+        <span className="hidden sm:inline ml-1">Previous</span>
       </Button>
 
-      <div className="flex items-center space-x-1">
+      {/* Desktop pagination */}
+      <div className="hidden sm:flex items-center space-x-1">
         {visiblePages[0] > 1 && (
           <>
             <Button
@@ -75,12 +90,20 @@ export function Pagination({
         )}
       </div>
 
+      {/* Mobile pagination */}
+      <div className="flex sm:hidden items-center space-x-1">
+        <span className="text-sm text-gray-600">
+          {currentPage} / {totalPages}
+        </span>
+      </div>
+
       <Button
         variant="outline"
         size="sm"
         onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}>
-        Next
+        disabled={currentPage === totalPages}
+        className="h-8 sm:h-10 px-2 sm:px-3">
+        <span className="hidden sm:inline mr-1">Next</span>
         <ChevronRight className="h-4 w-4" />
       </Button>
     </div>
