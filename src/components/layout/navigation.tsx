@@ -41,7 +41,7 @@ export function Navigation() {
                     : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 )}>
                 <BarChart3 className="h-4 w-4 mr-1" />
-                Analytics
+                Demographics
               </Link>
             </div>
           </div>

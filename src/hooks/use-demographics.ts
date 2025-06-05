@@ -4,6 +4,7 @@ import {
   DemographicsConfigCreatePayload,
   DemographicsConfigUpdatePayload,
   DemographicsResultsParams,
+  DemographicsResult,
 } from "@/types";
 
 export const DEMOGRAPHICS_CONFIG_QUERY_KEY = "demographics-config";
@@ -12,7 +13,11 @@ export const DEMOGRAPHICS_RESULTS_QUERY_KEY = "demographics-results";
 export function useDemographicsResults(params: DemographicsResultsParams) {
   return useQuery({
     queryKey: [DEMOGRAPHICS_RESULTS_QUERY_KEY, params],
-    queryFn: () => demographicsService.getResults(params),
+    queryFn: async () => {
+      const results = await demographicsService.getResults(params);
+      // Ensure we always return an array
+      return Array.isArray(results) ? results : [];
+    },
     enabled: !!params.camera_id,
   });
 }

@@ -82,7 +82,7 @@ export default function CameraDetailPage() {
             <Link href={`/demographics?camera_id=${camera.id}`}>
               <Button variant="outline">
                 <BarChart3 className="h-4 w-4 mr-2" />
-                Analytics
+                Demographics
               </Button>
             </Link>
           </div>

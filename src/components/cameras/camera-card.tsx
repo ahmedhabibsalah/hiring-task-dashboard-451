@@ -93,7 +93,7 @@ export function CameraCard({ camera }: CameraCardProps) {
               className="flex-1">
               <Button variant="outline" size="sm" className="w-full">
                 <BarChart3 className="h-4 w-4 mr-1" />
-                Analytics
+                Demographics
               </Button>
             </Link>
           </div>
