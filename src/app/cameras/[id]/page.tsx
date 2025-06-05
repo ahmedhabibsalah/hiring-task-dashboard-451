@@ -14,6 +14,8 @@ import {
   DescriptionListItem,
 } from "@/components/ui/description-list";
 import { format } from "date-fns";
+import { ConfigStatus } from "@/components/demographics/config-status";
+import { ConfigSummary } from "@/components/demographics/config-summary";
 
 export default function CameraDetailPage() {
   const params = useParams();
@@ -183,80 +185,18 @@ export default function CameraDetailPage() {
         </TabsContent>
 
         <TabsContent value="demographics">
-          {hasConfig ? (
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Demographics Configuration</CardTitle>
-                <Link href={`/cameras/${camera.id}/demographics`}>
-                  <Button variant="outline" size="sm">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Edit Config
-                  </Button>
-                </Link>
+          <ConfigStatus
+            cameraId={camera.id}
+            config={camera.demographics_config}
+          />
+
+          {camera.demographics_config && (
+            <Card className="mt-4">
+              <CardHeader>
+                <CardTitle>Configuration Details</CardTitle>
               </CardHeader>
               <CardContent>
-                <DescriptionList className="lg:grid-cols-3">
-                  <DescriptionListItem
-                    label="Track History Max"
-                    value={camera.demographics_config!.track_history_max_length}
-                  />
-                  <DescriptionListItem
-                    label="Exit Threshold"
-                    value={camera.demographics_config!.exit_threshold}
-                  />
-                  <DescriptionListItem
-                    label="Min Track Duration"
-                    value={`${camera.demographics_config!.min_track_duration}s`}
-                  />
-                  <DescriptionListItem
-                    label="Detection Confidence"
-                    value={
-                      camera.demographics_config!.detection_confidence_threshold
-                    }
-                  />
-                  <DescriptionListItem
-                    label="Demographics Confidence"
-                    value={
-                      camera.demographics_config!
-                        .demographics_confidence_threshold
-                    }
-                  />
-                  <DescriptionListItem
-                    label="Min Track Updates"
-                    value={camera.demographics_config!.min_track_updates}
-                  />
-                  <DescriptionListItem
-                    label="Box Area Threshold"
-                    value={camera.demographics_config!.box_area_threshold}
-                  />
-                  <DescriptionListItem
-                    label="Save Interval"
-                    value={`${camera.demographics_config!.save_interval}s`}
-                  />
-                  <DescriptionListItem
-                    label="Frame Skip Interval"
-                    value={`${
-                      camera.demographics_config!.frame_skip_interval
-                    }s`}
-                  />
-                </DescriptionList>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="py-12">
-                <div className="text-center">
-                  <Settings className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    No Demographics Configuration
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Configure demographics to start tracking analytics
-                  </p>
-                  <Link href={`/cameras/${camera.id}/demographics`}>
-                    <Button variant="primary">Configure Demographics</Button>
-                  </Link>
-                </div>
+                <ConfigSummary config={camera.demographics_config} />
               </CardContent>
             </Card>
           )}

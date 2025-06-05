@@ -35,6 +35,13 @@ export function CardTitle({
   );
 }
 
+export function CardDescription({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  return <p className={cn("text-sm text-gray-600", className)} {...props} />;
+}
+
 export function CardContent({ className, ...props }: CardProps) {
   return <div className={cn("p-6 pt-0", className)} {...props} />;
 }
