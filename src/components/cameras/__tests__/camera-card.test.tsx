@@ -63,15 +63,16 @@ describe("CameraCard", () => {
   it("renders action buttons with correct links", () => {
     render(<CameraCard camera={mockCamera} />);
 
-    expect(screen.getByRole("link", { name: /details/i })).toHaveAttribute(
-      "href",
-      "/cameras/123"
-    );
-    expect(screen.getByRole("link", { name: /edit/i })).toHaveAttribute(
-      "href",
-      "/cameras/123/edit"
-    );
-    expect(screen.getByRole("link", { name: /analytics/i })).toHaveAttribute(
+    const viewDetailsLink = screen.getByRole("link", { name: /view details/i });
+    expect(viewDetailsLink).toHaveAttribute("href", "/cameras/123");
+
+    const editLink = screen.getByRole("link", { name: /edit/i });
+    expect(editLink).toHaveAttribute("href", "/cameras/123/edit");
+
+    const demographicsLink = screen.getByRole("link", {
+      name: /demographics/i,
+    });
+    expect(demographicsLink).toHaveAttribute(
       "href",
       "/demographics?camera_id=123"
     );

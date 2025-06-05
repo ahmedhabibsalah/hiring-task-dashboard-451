@@ -13,7 +13,10 @@ jest.mock("@/services", () => ({
 const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: { retry: false },
+      queries: {
+        retry: false,
+        staleTime: 0,
+      },
     },
   });
 
@@ -96,7 +99,8 @@ describe("useCamera", () => {
       wrapper: createWrapper(),
     });
 
-    expect(result.current.isIdle || result.current.isLoading).toBe(true);
+    expect(result.current.status).toBe("pending");
+    expect(result.current.fetchStatus).toBe("idle");
     expect(camerasService.getCameraById).not.toHaveBeenCalled();
   });
 });
