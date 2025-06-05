@@ -123,7 +123,6 @@ export default function DemographicsPage() {
           </div>
         ) : analytics ? (
           <>
-            {/* Summary Cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -197,7 +196,6 @@ export default function DemographicsPage() {
               </Card>
             </div>
 
-            {/* Charts */}
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
@@ -269,7 +267,6 @@ export default function DemographicsPage() {
               </Card>
             </div>
 
-            {/* Time Series */}
             {timeSeriesData.length > 0 && (
               <Card>
                 <CardHeader>

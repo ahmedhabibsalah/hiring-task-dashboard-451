@@ -44,7 +44,7 @@ describe("Validation Schemas", () => {
       const invalidData = {
         name: "Test Camera",
         rtsp_url: "https://example.com/stream",
-        stream_frame_width: 3000, // exceeds max
+        stream_frame_width: 3000,
       };
 
       const result = cameraUpdateSchema.safeParse(invalidData);
@@ -77,7 +77,7 @@ describe("Validation Schemas", () => {
     it("validates confidence threshold range", () => {
       const invalidData = {
         camera_id: "123",
-        detection_confidence_threshold: 1.5, // exceeds max
+        detection_confidence_threshold: 1.5,
       };
 
       const result = demographicsConfigSchema.safeParse(invalidData);

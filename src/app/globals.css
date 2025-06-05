@@ -3,26 +3,22 @@
 @tailwind utilities;
 
 @layer base {
-  /* Ensure proper tap targets on mobile */
   button,
   a {
     min-height: 44px;
     min-width: 44px;
   }
 
-  /* Better text readability on mobile */
   @media (max-width: 640px) {
     html {
       font-size: 14px;
     }
   }
 
-  /* Prevent horizontal scroll */
   body {
     overflow-x: hidden;
   }
 
-  /* Better form inputs on mobile */
   input,
   select,
   textarea {
@@ -31,7 +27,6 @@
 }
 
 @layer utilities {
-  /* Hide scrollbar but keep functionality */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -41,7 +36,6 @@
     display: none;
   }
 
-  /* Safe area insets for mobile devices */
   .safe-top {
     padding-top: env(safe-area-inset-top);
   }

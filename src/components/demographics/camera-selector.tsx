@@ -10,7 +10,7 @@ export function CameraSelector() {
   const searchParams = useSearchParams();
   const currentCameraId = searchParams.get("camera_id") || "";
 
-  const { data } = useCameras({ size: 100 }); // Get all cameras
+  const { data } = useCameras({ size: 100 });
 
   const handleCameraChange = (cameraId: string) => {
     const params = new URLSearchParams(searchParams.toString());

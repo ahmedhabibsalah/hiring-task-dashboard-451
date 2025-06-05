@@ -9,6 +9,7 @@ You are tasked with building a responsive frontend application that interfaces w
 ## Submission
 
 Please fork this repository and submit your solution as a pull request. Include in your README:
+
 - Setup instructions
 - Overview of your implementation
 - Any assumptions or design decisions
@@ -19,26 +20,31 @@ If you have any questions or need assistance, feel free to open an issue in the 
 ## Requirements
 
 ### 1. Camera List Page
+
 - Implement a paginated view of cameras
 - Allow users to control how many items appear per page
 - Provide a way to search for cameras by name
 - Display relevant camera information in a user-friendly manner
 
 ### 2. Camera Detail Page
-- Create a view showing comprehensive camera information 
+
+- Create a view showing comprehensive camera information
 - Design an intuitive layout for camera details
 
 ### 3. Camera Update Functionality
+
 - Develop a user interface for updating camera details
 - Implement appropriate validation with meaningful feedback
 - Consider the user experience during form submission
 
 ### 4. Demographics Configuration
+
 - Enable users to create or edit demographics configuration for cameras - one to one relationship with camera
 - Design form controls appropriate for each configuration parameter
 - Ensure proper validation of configuration values
 
 ### 5. Demographics Results & Analytics
+
 - Implement filtering capabilities for the data
 - Create informative visualizations that convey demographic insights like charts, graphs, tables, etc.
 
@@ -48,10 +54,10 @@ If you have any questions or need assistance, feel free to open an issue in the 
 - Implement responsive design that works well across different devices
 - Let your imagination make the design of the task responsive.
 
-
 ## Nice-to-Have Technical Features
 
 The following features would enhance your solution:
+
 - Different rendering ways as needed (SSR, ISR, SSG, etc.)
 - Skeleton loading states to improve perceived performance
 - Seamless data refresh mechanisms
@@ -71,12 +77,14 @@ The following features would enhance your solution:
 ### Enum Definitions
 
 #### Genders
+
 ```
 MALE = "male"
 FEMALE = "female"
 ```
 
 #### Ages
+
 ```
 ZERO_EIGHTEEN = "0-18"
 NINETEEN_THIRTY = "19-30"
@@ -86,6 +94,7 @@ SIXTYPLUS = "60+"
 ```
 
 #### Emotions
+
 ```
 ANGRY = "angry"
 FEAR = "fear"
@@ -96,6 +105,7 @@ SURPRISE = "surprise"
 ```
 
 #### Ethnic Groups
+
 ```
 WHITE = "white"
 AFRICAN = "african"
@@ -107,6 +117,7 @@ MIDDLE_EASTERN = "middle_eastern"
 ### Tags Endpoint
 
 #### 1. List All Tags
+
 ```
 GET /tags/
 ```
@@ -116,6 +127,7 @@ Response: List of all available tags
 ### Camera Endpoints
 
 #### 1. List Cameras
+
 ```
 GET /cameras/
 Query Parameters:
@@ -127,6 +139,7 @@ Query Parameters:
 Response: Paginated list of cameras
 
 #### 2. Get Camera Details
+
 ```
 GET /cameras/{camera_id}
 ```
@@ -134,6 +147,7 @@ GET /cameras/{camera_id}
 Response: Detailed camera information including demographics config if it exists
 
 #### 3. Update Camera
+
 ```
 PUT /cameras/{camera_id}
 Body: {
@@ -152,6 +166,7 @@ Body: {
 ### Demographics Endpoints
 
 #### 1. Create Demographics Configuration
+
 ```
 POST /demographics/config
 Body: {
@@ -169,6 +184,7 @@ Body: {
 ```
 
 #### 2. Update Demographics Configuration
+
 ```
 PUT /demographics/config/{config_id}
 Body: {
@@ -185,6 +201,7 @@ Body: {
 ```
 
 #### 3. Get Demographics Results
+
 ```
 GET /demographics/results
 Query Parameters:
@@ -202,6 +219,7 @@ Response: List of demographics results and analytics data
 ## Evaluation Criteria
 
 Your submission will be evaluated based on:
+
 - Feature completeness according to requirements
 - Code quality and organization
 - UI/UX design and responsiveness

@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import { CameraCard } from "../camera-card";
 import { Camera } from "@/types";
 
-// Mock Next.js Link
 jest.mock("next/link", () => {
   return ({ children, href }: any) => {
     return <a href={href}>{children}</a>;

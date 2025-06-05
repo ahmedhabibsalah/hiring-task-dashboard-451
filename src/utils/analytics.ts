@@ -7,7 +7,6 @@ import {
 } from "@/types";
 
 export function aggregateDemographicsData(results: DemographicsResult[]) {
-  // Add safety check
   if (!Array.isArray(results) || results.length === 0) {
     return {
       total: 0,
@@ -69,7 +68,7 @@ export function prepareChartData<T extends string>(
   labelFormatter?: (key: T) => string
 ) {
   return Object.entries(data)
-    .filter(([_, value]) => value > 0) // Only include non-zero values
+    .filter(([_, value]) => value > 0)
     .map(([key, value]) => ({
       name: labelFormatter ? labelFormatter(key as T) : key,
       value: value as number,

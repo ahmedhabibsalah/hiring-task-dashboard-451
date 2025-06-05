@@ -21,7 +21,6 @@ export default function CamerasPage() {
     searchParams.get("camera_name") || ""
   );
 
-  // Initialize pageSize from URL or default
   const [pageSize, setPageSize] = useState(() => {
     const sizeParam = searchParams.get("size");
     return sizeParam ? Number(sizeParam) : 6;
@@ -29,7 +28,6 @@ export default function CamerasPage() {
 
   const currentPage = Number(searchParams.get("page")) || 1;
 
-  // Update pageSize when URL changes
   useEffect(() => {
     const sizeParam = searchParams.get("size");
     if (sizeParam) {

@@ -19,13 +19,10 @@ export function ResponsiveChart({
       let height = minHeight;
 
       if (width < 640) {
-        // mobile
         height = 250;
       } else if (width < 1024) {
-        // tablet
         height = 300;
       } else {
-        // desktop
         height = 350;
       }
 

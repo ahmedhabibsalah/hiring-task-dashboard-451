@@ -15,7 +15,6 @@ export function useDemographicsResults(params: DemographicsResultsParams) {
     queryKey: [DEMOGRAPHICS_RESULTS_QUERY_KEY, params],
     queryFn: async () => {
       const results = await demographicsService.getResults(params);
-      // Ensure we always return an array
       return Array.isArray(results) ? results : [];
     },
     enabled: !!params.camera_id,

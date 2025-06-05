@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useCameras, useCamera } from "../use-cameras";
 import { camerasService } from "@/services";
 
-// Mock the service
 jest.mock("@/services", () => ({
   camerasService: {
     getCameras: jest.fn(),
@@ -97,7 +96,6 @@ describe("useCamera", () => {
       wrapper: createWrapper(),
     });
 
-    // The hook should not be enabled when ID is empty
     expect(result.current.isIdle || result.current.isLoading).toBe(true);
     expect(camerasService.getCameraById).not.toHaveBeenCalled();
   });
