@@ -1,0 +1,131 @@
+import { Gender, AgeGroup, Emotion, EthnicGroup } from "./enums";
+
+export interface Tag {
+  id: string;
+  name: string;
+}
+
+export interface Camera {
+  id: string;
+  name: string;
+  rtsp_url: string;
+  stream_frame_width?: number;
+  stream_frame_height?: number;
+  stream_max_length?: number;
+  stream_quality?: number;
+  stream_fps?: number;
+  stream_skip_frames?: number;
+  tags?: Tag[];
+  demographics_config?: DemographicsConfig;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CameraUpdatePayload {
+  name: string;
+  rtsp_url: string;
+  stream_frame_width?: number;
+  stream_frame_height?: number;
+  stream_max_length?: number;
+  stream_quality?: number;
+  stream_fps?: number;
+  stream_skip_frames?: number;
+  tags?: string[];
+}
+
+export interface PaginationParams {
+  page?: number;
+  size?: number;
+}
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+}
+
+export interface CameraListParams extends PaginationParams {
+  camera_name?: string;
+}
+export interface DemographicsConfig {
+  id: string;
+  camera_id: string;
+  track_history_max_length?: number;
+  exit_threshold?: number;
+  min_track_duration?: number;
+  detection_confidence_threshold?: number;
+  demographics_confidence_threshold?: number;
+  min_track_updates?: number;
+  box_area_threshold?: number;
+  save_interval?: number;
+  frame_skip_interval?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DemographicsConfigCreatePayload {
+  camera_id: string;
+  track_history_max_length?: number;
+  exit_threshold?: number;
+  min_track_duration?: number;
+  detection_confidence_threshold?: number;
+  demographics_confidence_threshold?: number;
+  min_track_updates?: number;
+  box_area_threshold?: number;
+  save_interval?: number;
+  frame_skip_interval?: number;
+}
+
+export interface DemographicsConfigUpdatePayload {
+  track_history_max_length?: number;
+  exit_threshold?: number;
+  min_track_duration?: number;
+  detection_confidence_threshold?: number;
+  demographics_confidence_threshold?: number;
+  min_track_updates?: number;
+  box_area_threshold?: number;
+  save_interval?: number;
+  frame_skip_interval?: number;
+}
+
+export interface DemographicsResult {
+  id: string;
+  camera_id: string;
+  gender: Gender;
+  age: AgeGroup;
+  emotion: Emotion;
+  ethnicity: EthnicGroup;
+  confidence: number;
+  timestamp: string;
+  created_at: string;
+}
+
+export interface DemographicsResultsParams {
+  camera_id: string;
+  gender?: Gender;
+  age?: AgeGroup;
+  emotion?: Emotion;
+  ethnicity?: EthnicGroup;
+  start_date?: string;
+  end_date?: string;
+}
+
+export interface DemographicsAnalytics {
+  total_detections: number;
+  gender_distribution: Record<Gender, number>;
+  age_distribution: Record<AgeGroup, number>;
+  emotion_distribution: Record<Emotion, number>;
+  ethnicity_distribution: Record<EthnicGroup, number>;
+  time_series_data: TimeSeriesDataPoint[];
+}
+
+export interface TimeSeriesDataPoint {
+  timestamp: string;
+  count: number;
+  gender?: Record<Gender, number>;
+  age?: Record<AgeGroup, number>;
+  emotion?: Record<Emotion, number>;
+  ethnicity?: Record<EthnicGroup, number>;
+}
