@@ -1,7 +1,7 @@
 import { Camera } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Video, Settings, BarChart3 } from "lucide-react";
+import { Video, Settings, BarChart3, Eye } from "lucide-react";
 import Link from "next/link";
 
 interface CameraCardProps {
@@ -11,26 +11,19 @@ interface CameraCardProps {
 export function CameraCard({ camera }: CameraCardProps) {
   return (
     <Card className="hover:shadow-lg transition-shadow">
-      <CardHeader>
-        <div className="flex items-start justify-between">
-          <div className="flex items-center space-x-2">
-            <Video className="h-5 w-5 text-blue-600" />
-            <CardTitle className="text-lg">{camera.name}</CardTitle>
+      <Link href={`/cameras/${camera.id}`}>
+        <CardHeader className="cursor-pointer">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center space-x-2">
+              <Video className="h-5 w-5 text-blue-600" />
+              <CardTitle className="text-lg hover:text-blue-600 transition-colors">
+                {camera.name}
+              </CardTitle>
+            </div>
+            <Eye className="h-4 w-4 text-gray-400" />
           </div>
-          <div className="flex space-x-2">
-            <Link href={`/cameras/${camera.id}`}>
-              <Button variant="ghost" size="sm">
-                <Settings className="h-4 w-4" />
-              </Button>
-            </Link>
-            <Link href={`/demographics?camera_id=${camera.id}`}>
-              <Button variant="ghost" size="sm">
-                <BarChart3 className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </CardHeader>
+        </CardHeader>
+      </Link>
       <CardContent>
         <div className="space-y-2 text-sm">
           <div>
@@ -67,7 +60,7 @@ export function CameraCard({ camera }: CameraCardProps) {
               </div>
             </div>
           )}
-          <div className="pt-2">
+          <div className="pt-2 flex items-center justify-between">
             <span
               className={`px-2 py-1 text-xs rounded-full ${
                 camera.demographics_config
@@ -78,6 +71,31 @@ export function CameraCard({ camera }: CameraCardProps) {
                 ? "Demographics Configured"
                 : "No Demographics Config"}
             </span>
+          </div>
+          <div className="flex gap-2 pt-2">
+            <Link href={`/cameras/${camera.id}`} className="flex-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full whitespace-nowrap">
+                <Eye className="h-4 w-4 mr-1" />
+                View Details
+              </Button>
+            </Link>
+            <Link href={`/cameras/${camera.id}/edit`} className="flex-1">
+              <Button variant="outline" size="sm" className="w-full">
+                <Settings className="h-4 w-4 mr-1" />
+                Edit
+              </Button>
+            </Link>
+            <Link
+              href={`/demographics?camera_id=${camera.id}`}
+              className="flex-1">
+              <Button variant="outline" size="sm" className="w-full">
+                <BarChart3 className="h-4 w-4 mr-1" />
+                Analytics
+              </Button>
+            </Link>
           </div>
         </div>
       </CardContent>
