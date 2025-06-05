@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Navigation } from "@/components/layout/navigation";
+import { ConnectionStatus } from "@/components/ui/connection-status";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
             <main>{children}</main>
           </div>
         </Providers>
+        <ConnectionStatus />
       </body>
     </html>
   );

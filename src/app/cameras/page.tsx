@@ -9,6 +9,9 @@ import { CameraListSkeleton } from "@/components/cameras/camera-list-skeleton";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/ui/pagination";
+import { ErrorState } from "@/components/ui/error-state";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Video } from "lucide-react";
 
 export default function CamerasPage() {
   const router = useRouter();
@@ -96,38 +99,48 @@ export default function CamerasPage() {
       </div>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
-          <p className="text-red-800">Error loading cameras: {error.message}</p>
-        </div>
+        <ErrorState
+          title="Failed to load cameras"
+          message={
+            error.message ||
+            "We couldn't load the camera list. Please check your connection and try again."
+          }
+          onRetry={() => window.location.reload()}
+        />
       )}
 
-      {isLoading ? (
-        <CameraListSkeleton />
-      ) : data?.items.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No cameras found</p>
-          {searchParams.get("camera_name") && (
-            <p className="text-gray-400 mt-2">
-              Try adjusting your search criteria
-            </p>
-          )}
-        </div>
-      ) : (
+      {!error && (
         <>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
-            {data?.items.map((camera) => (
-              <CameraCard key={camera.id} camera={camera} />
-            ))}
-          </div>
+          {isLoading ? (
+            <CameraListSkeleton />
+          ) : data?.items.length === 0 ? (
+            <EmptyState
+              icon={Video}
+              title="No cameras found"
+              description={
+                searchParams.get("camera_name")
+                  ? "No cameras match your search criteria. Try adjusting your filters."
+                  : "Get started by adding your first camera to the system."
+              }
+            />
+          ) : (
+            <>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
+                {data?.items.map((camera) => (
+                  <CameraCard key={camera.id} camera={camera} />
+                ))}
+              </div>
 
-          {data && data.pages > 1 && (
-            <div className="flex justify-center">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={data.pages}
-                onPageChange={handlePageChange}
-              />
-            </div>
+              {data && data.pages > 1 && (
+                <div className="flex justify-center">
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={data.pages}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
+            </>
           )}
         </>
       )}
