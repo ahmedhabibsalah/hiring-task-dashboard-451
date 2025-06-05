@@ -1,5 +1,9 @@
 # TechFlipp Frontend Task
 
+## 📄 Documentation
+
+For full details and extended explanations, please refer to the [View Full Documentation](https://docs.google.com/document/d/1GYiC0YiDbTOg1x1-IvqKOYzmvQyo_OMHUygb5Bc_WKQ/edit?usp=sharing).
+
 ## Overview
 
 👋 This is a NextJS interview challenge. Please fork this repo, and push your code to a branch in your forked repo (following the instructions below).
