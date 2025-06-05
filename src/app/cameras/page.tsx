@@ -20,10 +20,22 @@ export default function CamerasPage() {
   const [searchTerm, setSearchTerm] = useState(
     searchParams.get("camera_name") || ""
   );
-  const [pageSize, setPageSize] = useState(
-    Number(searchParams.get("size")) || 12
-  );
+
+  // Initialize pageSize from URL or default
+  const [pageSize, setPageSize] = useState(() => {
+    const sizeParam = searchParams.get("size");
+    return sizeParam ? Number(sizeParam) : 6;
+  });
+
   const currentPage = Number(searchParams.get("page")) || 1;
+
+  // Update pageSize when URL changes
+  useEffect(() => {
+    const sizeParam = searchParams.get("size");
+    if (sizeParam) {
+      setPageSize(Number(sizeParam));
+    }
+  }, [searchParams]);
 
   const { data, isLoading, error } = useCameras({
     page: currentPage,
@@ -56,8 +68,9 @@ export default function CamerasPage() {
     updateSearchParams({ page });
   };
 
-  const handlePageSizeChange = (size: number) => {
-    updateSearchParams({ size, page: 1 });
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    updateSearchParams({ size: newSize, page: 1 });
   };
 
   return (
@@ -85,11 +98,14 @@ export default function CamerasPage() {
         </form>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">Items per page:</span>
+          <label htmlFor="page-size" className="text-sm text-gray-600">
+            Items per page:
+          </label>
           <select
+            id="page-size"
             value={pageSize}
             onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-            className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="px-3 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white cursor-pointer">
             <option value={6}>6</option>
             <option value={12}>12</option>
             <option value={24}>24</option>
