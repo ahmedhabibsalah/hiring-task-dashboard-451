@@ -159,7 +159,7 @@ export function DemographicsConfigForm({
             {!isUpdate && (
               <input
                 type="hidden"
-                {...register("camera_id" as any)}
+                {...register("camera_id" as keyof DemographicsConfigFormData)}
                 value={cameraId}
               />
             )}

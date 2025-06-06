@@ -67,11 +67,11 @@ export function prepareChartData<T extends string>(
   data: Record<T, number>,
   labelFormatter?: (key: T) => string
 ) {
-  return Object.entries(data)
-    .filter(([_, value]) => value > 0)
+  return (Object.entries(data) as [T, number][])
+    .filter(([, value]) => value > 0)
     .map(([key, value]) => ({
-      name: labelFormatter ? labelFormatter(key as T) : key,
-      value: value as number,
+      name: labelFormatter ? labelFormatter(key) : key,
+      value: value,
     }));
 }
 

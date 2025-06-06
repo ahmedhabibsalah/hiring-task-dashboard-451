@@ -12,14 +12,13 @@ export interface ToastProps {
   duration?: number;
 }
 
-interface ToastContextValue {
-  toasts: ToastProps[];
-  addToast: (toast: Omit<ToastProps, "id">) => void;
-  removeToast: (id: string) => void;
-}
+// interface ToastContextValue {
+//   toasts: ToastProps[];
+//   addToast: (toast: Omit<ToastProps, "id">) => void;
+//   removeToast: (id: string) => void;
+// }
 
 export function Toast({
-  id,
   title,
   description,
   variant = "default",
