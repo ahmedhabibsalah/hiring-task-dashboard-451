@@ -31,6 +31,7 @@ export interface CameraUpdatePayload {
   stream_fps?: number;
   stream_skip_frames?: number;
   tags?: string[];
+  [key: string]: string | number | string[] | undefined;
 }
 
 export interface PaginationParams {
@@ -46,8 +47,11 @@ export interface PaginatedResponse<T> {
   pages: number;
 }
 
-export interface CameraListParams extends PaginationParams {
+export interface CameraListParams {
+  page?: number;
+  size?: number;
   camera_name?: string;
+  [key: string]: string | number | undefined;
 }
 export interface DemographicsConfig {
   id: string;
@@ -76,6 +80,7 @@ export interface DemographicsConfigCreatePayload {
   box_area_threshold?: number;
   save_interval?: number;
   frame_skip_interval?: number;
+  [key: string]: string | number | undefined;
 }
 
 export interface DemographicsConfigUpdatePayload {
@@ -88,6 +93,7 @@ export interface DemographicsConfigUpdatePayload {
   box_area_threshold?: number;
   save_interval?: number;
   frame_skip_interval?: number;
+  [key: string]: number | undefined;
 }
 
 export interface DemographicsResult {
@@ -112,13 +118,24 @@ export interface DemographicsResultsParams {
   end_date?: string;
 }
 
+export interface ApiAnalytics {
+  age_distribution: Record<string, number>;
+  emotion_distribution: Record<string, number>;
+  ethnicity_distribution: Record<string, number>;
+  gender_distribution: Record<string, number>;
+}
+
 export interface DemographicsAnalytics {
-  total_detections: number;
-  gender_distribution: Record<Gender, number>;
-  age_distribution: Record<AgeGroup, number>;
-  emotion_distribution: Record<Emotion, number>;
-  ethnicity_distribution: Record<EthnicGroup, number>;
-  time_series_data: TimeSeriesDataPoint[];
+  total: number;
+  gender: Record<Gender, number>;
+  age: Record<AgeGroup, number>;
+  emotion: Record<Emotion, number>;
+  ethnicity: Record<EthnicGroup, number>;
+}
+
+export interface DemographicsResponse {
+  items: DemographicsResult[];
+  analytics: ApiAnalytics;
 }
 
 export interface TimeSeriesDataPoint {

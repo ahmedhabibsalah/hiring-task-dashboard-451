@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { camerasService } from "@/services";
-import { CameraListParams, CameraUpdatePayload } from "@/types";
+import { CameraListParams, CameraUpdatePayload, Camera } from "@/types";
 
 export const CAMERAS_QUERY_KEY = "cameras";
 export const CAMERA_QUERY_KEY = "camera";
@@ -31,10 +31,13 @@ export function useUpdateCamera() {
 
       const previousCamera = queryClient.getQueryData([CAMERA_QUERY_KEY, id]);
 
-      queryClient.setQueryData([CAMERA_QUERY_KEY, id], (old: any) => ({
-        ...old,
-        ...data,
-      }));
+      queryClient.setQueryData(
+        [CAMERA_QUERY_KEY, id],
+        (old: Camera | undefined) => ({
+          ...old,
+          ...data,
+        })
+      );
 
       return { previousCamera, id };
     },

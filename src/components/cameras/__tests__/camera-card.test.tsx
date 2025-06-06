@@ -1,11 +1,20 @@
 import { render, screen } from "@testing-library/react";
 import { CameraCard } from "../camera-card";
 import { Camera } from "@/types";
+import React from "react";
 
 jest.mock("next/link", () => {
-  return ({ children, href }: any) => {
+  const MockedLink = ({
+    children,
+    href,
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) => {
     return <a href={href}>{children}</a>;
   };
+  MockedLink.displayName = "MockedLink";
+  return MockedLink;
 });
 
 describe("CameraCard", () => {

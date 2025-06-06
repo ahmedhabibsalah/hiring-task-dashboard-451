@@ -8,6 +8,7 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
+import type { TooltipProps } from "recharts";
 
 interface PieChartProps {
   data: Array<{
@@ -29,12 +30,20 @@ const DEFAULT_COLORS = [
   "#14B8A6", // teal-500
 ];
 
+interface CustomTooltipProps extends TooltipProps<number, string> {
+  active?: boolean;
+  payload?: Array<{
+    name: string;
+    value: number;
+  }>;
+}
+
 export function PieChart({
   data,
   colors = DEFAULT_COLORS,
   height = 300,
 }: PieChartProps) {
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-2 shadow-lg rounded border">

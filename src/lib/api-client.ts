@@ -1,7 +1,16 @@
 import { API_BASE_URL } from "./config";
 
+interface ApiErrorData {
+  detail?: string;
+  [key: string]: unknown;
+}
+
 export class ApiError extends Error {
-  constructor(message: string, public status: number, public data?: any) {
+  constructor(
+    message: string,
+    public status: number,
+    public data?: ApiErrorData
+  ) {
     super(message);
     this.name = "ApiError";
   }
@@ -45,60 +54,102 @@ async function fetchWithRetry(
   }
 }
 
-export const apiClient = {
-  async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
-    const url = new URL(`${API_BASE_URL}${endpoint}`);
+type QueryParams = Record<string, string | number | boolean | undefined | null>;
+type RequestBody = Record<string, unknown>;
 
-    if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          url.searchParams.append(key, String(value));
-        }
-      });
+function formatQueryParams(params: QueryParams): URLSearchParams {
+  const searchParams = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      if (typeof value === "object") {
+        searchParams.append(key, JSON.stringify(value));
+      } else {
+        searchParams.append(key, String(value));
+      }
     }
+  });
 
-    const response = await fetchWithRetry(url.toString(), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  return searchParams;
+}
 
-    return handleResponse<T>(response);
+export const apiClient = {
+  async get<T>(endpoint: string, params?: QueryParams): Promise<T> {
+    try {
+      const url = new URL(`${API_BASE_URL}${endpoint}`);
+
+      if (params) {
+        const searchParams = formatQueryParams(params);
+        url.search = searchParams.toString();
+      }
+
+      console.log("Request URL:", url.toString());
+
+      const response = await fetchWithRetry(url.toString(), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      return handleResponse<T>(response);
+    } catch (error) {
+      console.error("API Get Error:", error);
+      throw error;
+    }
   },
 
-  async post<T>(endpoint: string, data?: any): Promise<T> {
-    const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  async post<T>(endpoint: string, data?: RequestBody): Promise<T> {
+    try {
+      const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    return handleResponse<T>(response);
+      return handleResponse<T>(response);
+    } catch (error) {
+      console.error("API Post Error:", error);
+      throw error;
+    }
   },
 
-  async put<T>(endpoint: string, data?: any): Promise<T> {
-    const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  async put<T>(endpoint: string, data?: RequestBody): Promise<T> {
+    try {
+      const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    return handleResponse<T>(response);
+      return handleResponse<T>(response);
+    } catch (error) {
+      console.error("API Put Error:", error);
+      throw error;
+    }
   },
 
   async delete<T>(endpoint: string): Promise<T> {
-    const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
 
-    return handleResponse<T>(response);
+      return handleResponse<T>(response);
+    } catch (error) {
+      console.error("API Delete Error:", error);
+      throw error;
+    }
   },
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useDemographicsResults } from "@/hooks/use-demographics";
 import { DemographicsFilters } from "@/components/demographics/demographics-filters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import {
   aggregateDemographicsData,
   prepareChartData,
   prepareTimeSeriesData,
+  calculateAverageConfidence,
 } from "@/utils/analytics";
 import { DemographicsResultsParams } from "@/types";
 import { CameraSelector } from "@/components/demographics/camera-selector";
@@ -31,45 +32,44 @@ export default function DemographicsPage() {
     ...filters,
   };
 
-  const {
-    data: results,
-    isLoading,
-    error,
-  } = useDemographicsResults(queryParams);
+  const { data, isLoading, error } = useDemographicsResults(queryParams);
+
+  const items = useMemo(() => data?.items || [], [data?.items]);
+  const analyticsData = useMemo(() => data?.analytics, [data?.analytics]);
 
   const analytics = useMemo(() => {
-    if (!results || !Array.isArray(results) || results.length === 0) {
-      return null;
-    }
-    return aggregateDemographicsData(results);
-  }, [results]);
-
+    if (!analyticsData) return null;
+    return aggregateDemographicsData(analyticsData);
+  }, [analyticsData]);
   const chartData = useMemo(() => {
-    if (!analytics) return null;
+    if (!analyticsData) return null;
 
     return {
       gender: prepareChartData(
-        analytics.gender,
+        analyticsData.gender_distribution,
         (key) => key.charAt(0).toUpperCase() + key.slice(1)
       ),
-      age: prepareChartData(analytics.age),
+      age: prepareChartData(analyticsData.age_distribution),
       emotion: prepareChartData(
-        analytics.emotion,
+        analyticsData.emotion_distribution,
         (key) => key.charAt(0).toUpperCase() + key.slice(1)
       ),
-      ethnicity: prepareChartData(analytics.ethnicity, (key) =>
+      ethnicity: prepareChartData(analyticsData.ethnicity_distribution, (key) =>
         key
           .split("_")
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ")
       ),
     };
-  }, [analytics]);
+  }, [analyticsData]);
 
   const timeSeriesData = useMemo(() => {
-    if (!results || results.length === 0) return [];
-    return prepareTimeSeriesData(results);
-  }, [results]);
+    return prepareTimeSeriesData(items);
+  }, [items]);
+
+  const avgConfidence = useMemo(() => {
+    return calculateAverageConfidence(items);
+  }, [items]);
 
   if (!cameraId) {
     return (
@@ -133,7 +133,7 @@ export default function DemographicsPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
-                    {analytics.total.toLocaleString()}
+                    {analytics ? analytics.total.toLocaleString() : 0}{" "}
                   </div>
                 </CardContent>
               </Card>
@@ -146,19 +146,7 @@ export default function DemographicsPage() {
                   <TrendingUp className="h-4 w-4 text-gray-600" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">
-                    {results && Array.isArray(results) && results.length > 0
-                      ? (
-                          (results.reduce(
-                            (acc, r) => acc + (r.confidence || 0),
-                            0
-                          ) /
-                            results.length) *
-                          100
-                        ).toFixed(1)
-                      : 0}
-                    %
-                  </div>
+                  <div className="text-2xl font-bold">{avgConfidence}%</div>
                 </CardContent>
               </Card>
 
@@ -186,11 +174,11 @@ export default function DemographicsPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
-                    {
-                      Object.values(analytics.ethnicity).filter((v) => v > 0)
-                        .length
-                    }{" "}
-                    groups
+                    {analytics
+                      ? Object.values(analytics.ethnicity).filter((v) => v > 0)
+                          .length
+                      : 0}{" "}
+                    groups groups
                   </div>
                 </CardContent>
               </Card>

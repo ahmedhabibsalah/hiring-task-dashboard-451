@@ -15,7 +15,7 @@ import { format } from "date-fns";
 interface LineChartProps {
   data: Array<{
     timestamp: string;
-    [key: string]: any;
+    [key: string]: string | number;
   }>;
   lines: Array<{
     dataKey: string;
