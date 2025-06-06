@@ -4,7 +4,7 @@ import {
   DemographicsConfig,
   DemographicsConfigCreatePayload,
   DemographicsConfigUpdatePayload,
-  DemographicsResult,
+  DemographicsResponse,
   DemographicsResultsParams,
 } from "@/types";
 
@@ -30,10 +30,23 @@ export const demographicsService = {
 
   async getResults(
     params: DemographicsResultsParams
-  ): Promise<DemographicsResult[]> {
-    return apiClient.get<DemographicsResult[]>(
-      API_ENDPOINTS.demographics.results,
-      params
-    );
+  ): Promise<DemographicsResponse> {
+    try {
+      // Clean up params by removing undefined values
+      const cleanParams = Object.entries(params).reduce((acc, [key, value]) => {
+        if (value !== undefined && value !== "") {
+          acc[key] = value;
+        }
+        return acc;
+      }, {} as Record<string, string>);
+
+      return await apiClient.get<DemographicsResponse>(
+        API_ENDPOINTS.demographics.results,
+        cleanParams
+      );
+    } catch (error) {
+      console.error("Demographics Service Error:", error);
+      throw error;
+    }
   },
 };
