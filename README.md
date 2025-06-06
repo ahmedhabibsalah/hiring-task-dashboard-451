@@ -2,7 +2,7 @@
 
 ## 📄 Documentation
 
-For full details and extended explanations, please refer to the [View Full Documentation](https://docs.google.com/document/d/1GYiC0YiDbTOg1x1-IvqKOYzmvQyo_OMHUygb5Bc_WKQ/edit?usp=sharing)
+For full details and extended explanations, please refer to the [View Full Documentation](https://docs.google.com/document/d/1GYiC0YiDbTOg1x1-IvqKOYzmvQyo_OMHUygb5Bc_WKQ/edit?usp=sharing).
 
 ## Overview
 
