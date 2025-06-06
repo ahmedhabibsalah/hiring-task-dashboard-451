@@ -116,16 +116,26 @@ export interface DemographicsResultsParams {
   ethnicity?: EthnicGroup;
   start_date?: string;
   end_date?: string;
-  [key: string]: string | Gender | AgeGroup | Emotion | EthnicGroup | undefined;
+}
+
+export interface ApiAnalytics {
+  age_distribution: Record<string, number>;
+  emotion_distribution: Record<string, number>;
+  ethnicity_distribution: Record<string, number>;
+  gender_distribution: Record<string, number>;
 }
 
 export interface DemographicsAnalytics {
-  total_detections: number;
-  gender_distribution: Record<Gender, number>;
-  age_distribution: Record<AgeGroup, number>;
-  emotion_distribution: Record<Emotion, number>;
-  ethnicity_distribution: Record<EthnicGroup, number>;
-  time_series_data: TimeSeriesDataPoint[];
+  total: number;
+  gender: Record<Gender, number>;
+  age: Record<AgeGroup, number>;
+  emotion: Record<Emotion, number>;
+  ethnicity: Record<EthnicGroup, number>;
+}
+
+export interface DemographicsResponse {
+  items: DemographicsResult[];
+  analytics: ApiAnalytics;
 }
 
 export interface TimeSeriesDataPoint {
