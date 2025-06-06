@@ -4,7 +4,6 @@ import {
   DemographicsConfigCreatePayload,
   DemographicsConfigUpdatePayload,
   DemographicsResultsParams,
-  DemographicsResult,
 } from "@/types";
 
 export const DEMOGRAPHICS_CONFIG_QUERY_KEY = "demographics-config";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useDemographicsResults } from "@/hooks/use-demographics";
 import { DemographicsFilters } from "@/components/demographics/demographics-filters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

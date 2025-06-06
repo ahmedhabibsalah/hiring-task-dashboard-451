@@ -1,7 +1,17 @@
 import { API_BASE_URL } from "./config";
 
+// Define a type for API error data
+interface ApiErrorData {
+  detail?: string;
+  [key: string]: unknown;
+}
+
 export class ApiError extends Error {
-  constructor(message: string, public status: number, public data?: any) {
+  constructor(
+    message: string,
+    public status: number,
+    public data?: ApiErrorData
+  ) {
     super(message);
     this.name = "ApiError";
   }
@@ -45,8 +55,12 @@ async function fetchWithRetry(
   }
 }
 
+// Define types for request parameters and body
+type QueryParams = Record<string, string | number | boolean | undefined | null>;
+type RequestBody = Record<string, unknown>;
+
 export const apiClient = {
-  async get<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
+  async get<T>(endpoint: string, params?: QueryParams): Promise<T> {
     const url = new URL(`${API_BASE_URL}${endpoint}`);
 
     if (params) {
@@ -67,7 +81,7 @@ export const apiClient = {
     return handleResponse<T>(response);
   },
 
-  async post<T>(endpoint: string, data?: any): Promise<T> {
+  async post<T>(endpoint: string, data?: RequestBody): Promise<T> {
     const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
       method: "POST",
       headers: {
@@ -79,7 +93,7 @@ export const apiClient = {
     return handleResponse<T>(response);
   },
 
-  async put<T>(endpoint: string, data?: any): Promise<T> {
+  async put<T>(endpoint: string, data?: RequestBody): Promise<T> {
     const response = await fetchWithRetry(`${API_BASE_URL}${endpoint}`, {
       method: "PUT",
       headers: {

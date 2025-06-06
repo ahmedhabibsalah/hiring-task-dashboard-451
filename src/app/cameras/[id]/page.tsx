@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Edit, BarChart3, Settings, Video, Tag } from "lucide-react";
+import { ArrowLeft, Edit, BarChart3, Video, Tag } from "lucide-react";
 import { useCamera } from "@/hooks/use-cameras";
 import { CameraDetailSkeleton } from "@/components/cameras/camera-detail-skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

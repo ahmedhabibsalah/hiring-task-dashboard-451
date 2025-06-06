@@ -16,6 +16,7 @@ interface FilterValues {
   ethnicity?: EthnicGroup;
   start_date?: string;
   end_date?: string;
+  [key: string]: string | Gender | AgeGroup | Emotion | EthnicGroup | undefined;
 }
 
 interface DemographicsFiltersProps {

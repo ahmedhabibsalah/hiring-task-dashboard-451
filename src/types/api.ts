@@ -31,6 +31,7 @@ export interface CameraUpdatePayload {
   stream_fps?: number;
   stream_skip_frames?: number;
   tags?: string[];
+  [key: string]: string | number | string[] | undefined;
 }
 
 export interface PaginationParams {
@@ -46,8 +47,11 @@ export interface PaginatedResponse<T> {
   pages: number;
 }
 
-export interface CameraListParams extends PaginationParams {
+export interface CameraListParams {
+  page?: number;
+  size?: number;
   camera_name?: string;
+  [key: string]: string | number | undefined;
 }
 export interface DemographicsConfig {
   id: string;
@@ -76,6 +80,7 @@ export interface DemographicsConfigCreatePayload {
   box_area_threshold?: number;
   save_interval?: number;
   frame_skip_interval?: number;
+  [key: string]: string | number | undefined;
 }
 
 export interface DemographicsConfigUpdatePayload {
@@ -88,6 +93,7 @@ export interface DemographicsConfigUpdatePayload {
   box_area_threshold?: number;
   save_interval?: number;
   frame_skip_interval?: number;
+  [key: string]: number | undefined;
 }
 
 export interface DemographicsResult {
@@ -110,6 +116,7 @@ export interface DemographicsResultsParams {
   ethnicity?: EthnicGroup;
   start_date?: string;
   end_date?: string;
+  [key: string]: string | Gender | AgeGroup | Emotion | EthnicGroup | undefined;
 }
 
 export interface DemographicsAnalytics {

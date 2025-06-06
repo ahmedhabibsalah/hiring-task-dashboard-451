@@ -8,14 +8,13 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 interface BarChartProps {
   data: Array<{
     name: string;
     value: number;
-    [key: string]: any;
+    [key: string]: string | number;
   }>;
   dataKey?: string;
   height?: number;

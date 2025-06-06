@@ -8,7 +8,7 @@ import { CameraForm } from "@/components/cameras/camera-form";
 import { CameraDetailSkeleton } from "@/components/cameras/camera-detail-skeleton";
 import { Button } from "@/components/ui/button";
 import { CameraUpdateFormData } from "@/lib/validations";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function EditCameraPage() {
   const params = useParams();
